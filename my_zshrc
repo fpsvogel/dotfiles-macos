@@ -1,0 +1,6 @@
+# My Zsh customizations.
+# To use, replace the plugins section and Zsh initialization in ~/.zshrc
+# with this line (assuming this is in "~/scripts"):
+#   source ~/scripts/my_zshrc
+
+for f (~/scripts/zshrc*/*) source $f

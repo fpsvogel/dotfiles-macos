@@ -1,0 +1,12 @@
+# The kitchen sink. For miscellaneous things like initializing processes
+# (other than Zsh plugins), adding to PATH, etc.
+
+export PATH=$HOME/.rbenv/shims:$PATH
+export PATH=$HOME/.rbenv/bin:$PATH
+eval "$(rbenv init -)"
+
+export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+# Copy commands here that should take precedence over coreutils (such as /bin/stty)
+export PATH=~/.bin:$PATH
+
+export EDITOR=code

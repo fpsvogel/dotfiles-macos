@@ -1,0 +1,132 @@
+# Emacs shift-select mode: select text on the command line using Shift
+# as in many text editors, browsers, and other GUI programs.
+
+# Keybindings (defined below) are currently:
+# Shift + left/right: move selection by one character
+# Shift + Ctrl + left/right: move selection by one word
+# Shift + Home/End: move selection to beginning/end of line
+# Shift + Ctrl + Home/End: move selection to beginning/end of text
+# Alt + C: copy shift-selection
+# Alt + X: cut shift-selection
+# Alt + V: paste in a shift-selection-friendly way
+
+# Adapted from https://github.com/jirutka/zsh-shift-select
+# System clipboard integration weaved in from https://unix.stackexchange.com/a/634916
+
+# Move cursor to the end of the buffer.
+# This is an alternative to builtin end-of-buffer-or-history.
+function end-of-buffer() {
+	CURSOR=${#BUFFER}
+	zle end-of-line -w  # trigger syntax highlighting redraw
+}
+zle -N end-of-buffer
+
+# Move cursor to the beginning of the buffer.
+# This is an alternative to builtin beginning-of-buffer-or-history.
+function beginning-of-buffer() {
+	CURSOR=0
+	zle beginning-of-line -w  # trigger syntax highlighting redraw
+}
+zle -N beginning-of-buffer
+
+# Cut the selected text.
+function zle-clipboard-cut {
+  if ((REGION_ACTIVE)); then
+    zle copy-region-as-kill
+    print -rn -- $CUTBUFFER | pbcopy
+    zle kill-region -w
+  fi
+}
+zle -N zle-clipboard-cut
+
+# Copy the selected text.
+function zle-clipboard-copy {
+  if ((REGION_ACTIVE)); then
+    zle copy-region-as-kill
+    print -rn -- $CUTBUFFER | pbcopy
+  else
+    # Nothing is selected, so default to the interrupt command
+    zle send-break
+  fi
+}
+zle -N zle-clipboard-copy
+
+# Paste
+function zle-clipboard-paste {
+  if ((REGION_ACTIVE)); then
+    zle kill-region -w
+  fi
+  LBUFFER+="$(pbpaste)"
+}
+zle -N zle-clipboard-paste
+
+# Kill the selected region and switch back to the main keymap.
+function shift-select::kill-region() {
+	zle kill-region -w
+	zle -K main
+}
+zle -N shift-select::kill-region
+
+# Deactivate the selection region, switch back to the main keymap and process
+# the typed keys again.
+function shift-select::deselect-and-input() {
+	zle deactivate-region -w
+	# Switch back to the main keymap (emacs).
+	zle -K main
+	# Push the typed keys back to the input stack, i.e. process them again,
+	# but now with the main keymap.
+	zle -U "$KEYS"
+}
+zle -N shift-select::deselect-and-input
+
+# If the selection region is not active, set the mark at the cursor position,
+# switch to the shift-select keymap, and call $WIDGET without 'shift-select::'
+# prefix. This function must be used only for shift-select::<widget> widgets.
+function shift-select::select-and-invoke() {
+	if (( !REGION_ACTIVE )); then
+		zle set-mark-command -w
+		zle -K shift-select
+	fi
+	zle ${WIDGET#shift-select::} -w
+}
+
+function {
+	emulate -L zsh
+
+	# Create a new keymap for the shift-selection mode.
+	bindkey -N shift-select
+
+	# Bind all possible key sequences to deselect-and-input, i.e. it will be used
+	# as a fallback for "unbound" key sequences.
+	bindkey -M shift-select -R '^@'-'^?' shift-select::deselect-and-input
+
+	local kcap seq seq_mac widget
+
+	# Bind Shift keys in the emacs and shift-select keymaps.
+	for	kcap   seq          widget (             # key name
+		kLFT   '^[[1;2D'    backward-char        # Shift + LeftArrow
+		kRIT   '^[[1;2C'    forward-char         # Shift + RightArrow
+		kHOM   '^[[1;2H'    beginning-of-line    # Shift + Home
+		kEND   '^[[1;2F'    end-of-line          # Shift + End
+		x      '^[[1;6D'    backward-word        # Shift + Ctrl + LeftArrow
+		x      '^[[1;6C'    forward-word         # Shift + Ctrl + RightArrow
+		x      '^[[1;6H'    beginning-of-buffer  # Shift + Ctrl + Home
+		x      '^[[1;6F'    end-of-buffer        # Shift + Ctrl + End
+
+    x       $'≈'      zle-clipboard-cut             # `Alt + X`
+    x       $'ç'      zle-clipboard-copy            # `Alt + C`
+    x       $'√'      zle-clipboard-paste           # `Alt + V`
+	); do
+		zle -N shift-select::$widget shift-select::select-and-invoke
+		bindkey -M emacs ${terminfo[$kcap]:-$seq} shift-select::$widget
+		bindkey -M shift-select ${terminfo[$kcap]:-$seq} shift-select::$widget
+	done
+
+	# Bind keys in the shift-select keymap.
+	for	kcap   seq        widget (                        # key name
+		kdch1  '^[[3~'    shift-select::kill-region         # Delete
+		bs     '^?'       shift-select::kill-region         # Backspace
+	); do
+		bindkey -M shift-select ${terminfo[$kcap]:-$seq} $widget
+	done
+}

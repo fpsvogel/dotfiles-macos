@@ -1,0 +1,106 @@
+# GENERAL
+alias cl='tput reset'
+alias c='pbcopy' # to copy output to clipboard: echo 'hi' | c
+
+# ZSH PLUGINS
+alias cpp='copypath'
+alias cpf='copyfile'
+
+# GIT
+alias g='git'
+alias ga='git add'
+alias gap='git add --patch'
+alias gas='git add --patch db/schema.rb'
+alias gaxs="git add -- . ':!db/schema.rb'"
+# Add all except the file given in the argument.
+gax () {
+  git add -- . ":!$1"
+}
+cmsp () {
+  git add -- . ':!db/schema.rb'; git add --patch db/schema.rb; git commit --message "$1"; git restore db/schema.rb
+}
+alias gb='git branch'
+alias gbc='git_current_branch | pbcopy'
+alias gbda='git branch | grep -v "main" | xargs git branch -D'
+# or: 'git branch --no-color --merged | command grep -vE "^([+*]|\s*($(git_main_branch)|$(git_develop_branch))\s*$)" | command xargs git branch --delete 2>/dev/null'
+alias gco='git checkout'
+alias gcp='git cherry-pick'
+alias gc='git commit'
+alias gcm='git commit --message'
+alias gca='git commit --amend --no-edit'
+alias cm='git add .; git commit --message'
+alias cma='git add .; git commit --amend --no-edit'
+alias gl='git log --pretty=format:"%C(yellow)%h %C(cyan)%ad %Cgreen%an %Creset%s%C(brightred)%d" --date=short --graph'
+alias gm='git merge'
+alias gmm='git merge --no-edit main'
+alias gpl='git pull'
+alias gp='git push'
+alias gpf='git push --force'
+alias gpup='git push --set-upstream origin $(git_current_branch)'
+alias grb='git rebase'
+alias grbi='git rebase -i'
+alias grl='git reflog'
+alias grt='git reset'
+alias grh='git reset HEAD~'
+alias grha='git reset --hard'
+alias gr='git restore'
+alias grs='git restore --source main'
+alias grss='git restore --source main db/schema.rb'
+alias grv='git revert --no-edit'
+alias gst='git stash --include-untracked'
+alias gsp='git stash pop'
+alias gsl='git stash list'
+alias gss='git stash show'
+alias gssp='git stash show -p'
+alias gs='git status'
+alias gw='git switch'
+alias gwc='git switch --create'
+alias gt='git tag'
+alias gskip='git update-index --skip-worktree config/database.yml'
+
+# POSTGRES
+alias postgres='psql -U postgres'
+
+# RUBY
+alias bt='bin/bridgetown'
+alias bs='bin/bridgetown start'
+
+# RAKE
+alias rt='rake test'
+alias rw='rake warn'
+
+# RAILS
+alias r='rails'
+alias rs='rails s'
+alias rsp='PROFILE=true rails s'
+alias rc='rails c'
+alias rcv='rails c --sandbox'
+alias rmg='rails db:migrate:primary'
+alias rmt='rails db:migrate:primary RAILS_ENV=test'
+rmr () {
+  rails db:rollback:primary STEP=$1
+}
+rmrt () {
+  rails db:rollback:primary RAILS_ENV=test STEP=$1
+}
+rmd () {
+  rails db:migrate:down:primary VERSION=$1
+}
+rmdt () {
+  rails db:migrate:down:primary RAILS_ENV=test VERSION=$1
+}
+rmu () {
+  rails db:migrate:down:primary VERSION=$1
+}
+rmut () {
+  rails db:migrate:down:primary RAILS_ENV=test VERSION=$1
+}
+alias rlog='tail -f log/development.log'
+alias -g rev='RAILS_ENV=development'
+alias -g rep='RAILS_ENV=production'
+alias -g ret='RAILS_ENV=test'
+alias spid='rm tmp/pids/server.pid'
+alias rkill='fuser -k 3000/tcp && fuser -k 4000/tcp'
+
+# JS
+alias ns='npm run web_server'
