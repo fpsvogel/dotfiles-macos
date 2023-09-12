@@ -21,6 +21,7 @@ cmsp () {
 }
 alias gb='git branch'
 alias gbc='git_current_branch | pbcopy'
+alias gbd='git switch main; git branch -D @{-1}'
 alias gbda='git branch | grep -v "main" | xargs git branch -D'
 # or: 'git branch --no-color --merged | command grep -vE "^([+*]|\s*($(git_main_branch)|$(git_develop_branch))\s*$)" | command xargs git branch --delete 2>/dev/null'
 alias gco='git checkout'
@@ -39,6 +40,7 @@ alias gpf='git push --force'
 alias gpup='git push --set-upstream origin $(git_current_branch)'
 alias grb='git rebase'
 alias grbi='git rebase -i'
+alias grbc='git rebase --continue'
 alias grl='git reflog'
 alias grt='git reset'
 alias grh='git reset HEAD~'
@@ -100,7 +102,15 @@ alias -g rev='RAILS_ENV=development'
 alias -g rep='RAILS_ENV=production'
 alias -g ret='RAILS_ENV=test'
 alias spid='rm tmp/pids/server.pid'
-alias rkill='fuser -k 3000/tcp && fuser -k 4000/tcp'
+alias rkill='lsof -nti :3000 | xargs kill -9; lsof -nti :4000 | xargs kill -9'
+alias ra='rackup'
+alias b='bundle'
 
 # JS
-alias ns='npm run web_server'
+alias ns='npm run web_server --scripts-prepend-node-path'
+
+# Exercism
+# Run tests for the latest exercise
+alias xt='ruby $(ls -td -- */ | head -n 1)*_test.rb'
+# Submit the latest exercise
+alias xs='exercism submit $(find $(ls -td -- */ | head -n 1 | cut -d"/" -f1) -name "*.rb" ! -name "*_test.rb")'
