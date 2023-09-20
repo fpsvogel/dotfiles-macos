@@ -10,7 +10,7 @@ alias cpf='copyfile'
 alias g='git'
 alias ga='git add'
 alias gap='git add --patch'
-alias gas='git add --patch db/schema.rb'
+alias gaps='git add --patch db/schema.rb'
 alias gaxs="git add -- . ':!db/schema.rb'"
 # Add all except the file given in the argument.
 gax () {
@@ -42,11 +42,13 @@ alias grb='git rebase'
 alias grbi='git rebase -i'
 alias grbc='git rebase --continue'
 alias grl='git reflog'
+alias grm='git rm'
 alias grt='git reset'
 alias grh='git reset HEAD~'
 alias grha='git reset --hard'
 alias gr='git restore'
-alias grs='git restore --source main'
+alias grs='git restore db/schema.rb'
+alias grsa='git restore --source main'
 alias grss='git restore --source main db/schema.rb'
 alias grv='git revert --no-edit'
 alias gst='git stash --include-untracked'
@@ -110,7 +112,11 @@ alias b='bundle'
 alias ns='npm run web_server --scripts-prepend-node-path'
 
 # Exercism
-# Run tests for the latest exercise
+# Run tests for the latest Ruby exercise
 alias xt='ruby $(ls -td -- */ | head -n 1)*_test.rb'
-# Submit the latest exercise
+# Submit the latest Ruby exercise
 alias xs='exercism submit $(find $(ls -td -- */ | head -n 1 | cut -d"/" -f1) -name "*.rb" ! -name "*_test.rb")'
+# Same as above two, but for Lua
+# alias zt='cd $(ls -td -- */ | head -n 1); lua *_spec.lua; cd ..'
+alias zt='cd $(ls -td -- */ | head -n 1); busted; cd ..'
+alias zs='exercism submit $(find $(ls -td -- */ | head -n 1 | cut -d"/" -f1) -name "*.lua" ! -name "*_spec.lua")'
