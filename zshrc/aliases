@@ -22,7 +22,10 @@ cmsp () {
 alias gb='git branch'
 alias gbc='git_current_branch | pbcopy'
 alias gbd='git switch main; git branch -D @{-1}'
-alias gbda='git branch | grep -v "main" | xargs git branch -D'
+# delete all local branches that have been merged into main
+alias gbda='git branch --merged main | grep -v "main" | xargs -n 1 git branch -d'
+# delete ALL local branches
+alias gbdaa='git branch | grep -v "main" | xargs git branch -D'
 # or: 'git branch --no-color --merged | command grep -vE "^([+*]|\s*($(git_main_branch)|$(git_develop_branch))\s*$)" | command xargs git branch --delete 2>/dev/null'
 alias gco='git checkout'
 alias gcp='git cherry-pick'
@@ -35,12 +38,14 @@ alias gl='git log --pretty=format:"%C(yellow)%h %C(cyan)%ad %Cgreen%an %Creset%s
 alias gm='git merge'
 alias gmm='git merge --no-edit main'
 alias gpl='git pull'
+alias gpr='echo "https://github.com/origami-medical/origami_claims/compare/$(git_current_branch)" | pbcopy'
 alias gp='git push'
 alias gpf='git push --force'
 alias gpup='git push --set-upstream origin $(git_current_branch)'
 alias grb='git rebase'
 alias grbi='git rebase -i'
 alias grbc='git rebase --continue'
+alias grba='git rebase --abort'
 alias grl='git reflog'
 alias grm='git rm'
 alias grt='git reset'
@@ -48,8 +53,8 @@ alias grh='git reset HEAD~'
 alias grha='git reset --hard'
 alias gr='git restore'
 alias grs='git restore db/schema.rb'
-alias grsa='git restore --source main'
-alias grss='git restore --source main db/schema.rb'
+alias grsm='git restore --source main db/schema.rb'
+alias grma='git restore --source main'
 alias grv='git revert --no-edit'
 alias gst='git stash --include-untracked'
 alias gsp='git stash pop'
@@ -59,6 +64,7 @@ alias gssp='git stash show -p'
 alias gs='git status'
 alias gw='git switch'
 alias gwc='git switch --create'
+alias gwm='git switch main'
 alias gt='git tag'
 alias gskip='git update-index --skip-worktree config/database.yml'
 
@@ -94,16 +100,16 @@ rmdt () {
   rails db:migrate:down:primary RAILS_ENV=test VERSION=$1
 }
 rmu () {
-  rails db:migrate:down:primary VERSION=$1
+  rails db:migrate:up:primary VERSION=$1
 }
 rmut () {
-  rails db:migrate:down:primary RAILS_ENV=test VERSION=$1
+  rails db:migrate:up:primary RAILS_ENV=test VERSION=$1
 }
 alias rlog='tail -f log/development.log'
 alias -g rev='RAILS_ENV=development'
 alias -g rep='RAILS_ENV=production'
 alias -g ret='RAILS_ENV=test'
-alias spid='rm tmp/pids/server.pid'
+alias sp='rm tmp/pids/server.pid'
 alias rkill='lsof -nti :3000 | xargs kill -9; lsof -nti :4000 | xargs kill -9'
 alias ra='rackup'
 alias b='bundle'
@@ -120,3 +126,6 @@ alias xs='exercism submit $(find $(ls -td -- */ | head -n 1 | cut -d"/" -f1) -na
 # alias zt='cd $(ls -td -- */ | head -n 1); lua *_spec.lua; cd ..'
 alias zt='cd $(ls -td -- */ | head -n 1); busted; cd ..'
 alias zs='exercism submit $(find $(ls -td -- */ | head -n 1 | cut -d"/" -f1) -name "*.lua" ! -name "*_spec.lua")'
+
+# DragonRuby Game Toolkit
+alias dr='./dragonruby'
