@@ -15,4 +15,4 @@ plugins=(copybuffer copypath copyfile sudo z zsh-autosuggestions zsh-navigation-
 source $ZSH/oh-my-zsh.sh
 
 # zsh-syntax-highlighting must be loaded at the end.
-source $ZSH/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
