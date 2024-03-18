@@ -31,9 +31,11 @@ alias gco='git checkout'
 alias gcp='git cherry-pick'
 alias gc='git commit'
 alias gcm='git commit --message'
+alias gcma='git commit --message'
 alias gca='git commit --amend --no-edit'
 alias cm='git add .; git commit --message'
 alias cma='git add .; git commit --amend --no-edit'
+alias gd='git diff'
 alias gl='git log --pretty=format:"%C(yellow)%h %C(cyan)%ad %Cgreen%an %Creset%s%C(brightred)%d" --date=short --graph'
 alias gm='git merge'
 alias gmm='git merge --no-edit main'
@@ -76,34 +78,33 @@ alias bt='bin/bridgetown'
 alias bs='bin/bridgetown start'
 
 # RAKE
-alias rt='rake test'
-alias rw='rake warn'
+alias rt='bundle exec rake test'
 
 # RAILS
-alias r='rails'
+alias r='rspec'
 alias rs='rails s'
 alias rsp='PROFILE=true rails s'
 alias rc='rails c'
 alias rcv='rails c --sandbox'
-alias rmg='rails db:migrate:primary'
-alias rmt='rails db:migrate:primary RAILS_ENV=test'
+alias rmg='rails db:migrate'
+alias rmt='rails db:migrate RAILS_ENV=test'
 rmr () {
-  rails db:rollback:primary STEP=$1
+  rails db:rollback STEP=$1
 }
 rmrt () {
-  rails db:rollback:primary RAILS_ENV=test STEP=$1
+  rails db:rollback RAILS_ENV=test STEP=$1
 }
 rmd () {
-  rails db:migrate:down:primary VERSION=$1
+  rails db:migrate:down VERSION=$1
 }
 rmdt () {
-  rails db:migrate:down:primary RAILS_ENV=test VERSION=$1
+  rails db:migrate:down RAILS_ENV=test VERSION=$1
 }
 rmu () {
-  rails db:migrate:up:primary VERSION=$1
+  rails db:migrate:up VERSION=$1
 }
 rmut () {
-  rails db:migrate:up:primary RAILS_ENV=test VERSION=$1
+  rails db:migrate:up RAILS_ENV=test VERSION=$1
 }
 alias rlog='tail -f log/development.log'
 alias -g rev='RAILS_ENV=development'

@@ -12,3 +12,5 @@ export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 export PATH=~/.bin:$PATH
 
 export EDITOR=code
+
+export CDPATH="$HOME:$HOME/code"
