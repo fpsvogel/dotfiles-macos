@@ -13,4 +13,4 @@ export PATH=~/.bin:$PATH
 
 export EDITOR=code
 
-export CDPATH="$HOME:$HOME/code"
+export CDPATH="$HOME:$HOME/cod"
