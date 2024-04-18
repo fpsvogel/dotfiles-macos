@@ -9,6 +9,14 @@ alias cpp='copypath'
 alias cpf='copyfile'
 
 # GIT
+# Tip: VS Code keybinding to insert current filename in terminal.
+# Add to keybindings.json, via the command "Preferences: Open Keyboard Shortcuts (JSON)".
+# {
+#   "key": "cmd+shift+b",
+#   "command": "workbench.action.terminal.sendSequence",
+#   "args": { "text": " ${relativeFile}" },
+#   "when": "terminalFocus"
+# },
 alias g='git'
 alias ga='git add'
 alias gap='git add --patch'
