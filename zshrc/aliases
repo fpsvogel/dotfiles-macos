@@ -63,12 +63,13 @@ alias gl='git log --pretty=format:"%C(yellow)%h %C(cyan)%ad %Cgreen%an %Creset%s
 alias gls='gl -S'
 # Search for a string in past commits, showing diffs.
 alias glsd='gl -p -S'
-alias gpl='git pull'
 alias gp='git push'
 alias gpf='git push --force'
+alias gpl='git pull'
+alias gplr='gwm; git pull; gw -; git rebase $(main_branch)'
 # # Unnecessary after git config --global push.autoSetupRemote true
 # alias gpup='git push --set-upstream origin $(git_current_branch)'
-alias grm='git rebase master'
+alias grm='git rebase $(main_branch)'
 # Interactively rebase the last n commits, e.g. gr 5
 gr () {
   git rebase -i "HEAD~$1"
