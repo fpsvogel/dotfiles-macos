@@ -59,12 +59,16 @@ alias cma='git add .; git commit --amend --no-edit'
 alias ca='git add .; git commit --amend --no-edit'
 alias gd='git diff'
 alias gl='git log --pretty=format:"%C(yellow)%h %C(cyan)%ad %Cgreen%an %Creset%s%C(brightred)%d" --date=short --graph'
+# Search for a string in past commits, e.g. gls 'some string'
+alias gls='gl -S'
+# Search for a string in past commits, showing diffs.
+alias glsd='gl -p -S'
 alias gpl='git pull'
 alias gp='git push'
 alias gpf='git push --force'
 alias gpup='git push --set-upstream origin $(git_current_branch)'
 alias grm='git rebase master'
-# e.g. to interactively rebase the last 5 commits: gr 5
+# Interactively rebase the last n commits, e.g. gr 5
 gr () {
   git rebase -i "HEAD~$1"
 }
