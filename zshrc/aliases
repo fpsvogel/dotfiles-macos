@@ -93,6 +93,7 @@ alias gss='git stash show'
 alias gssp='git stash show -p'
 alias gs='git status'
 alias gw='git switch'
+alias gw-='git switch -'
 alias gwc='git switch --create'
 alias gwm='git switch $(main_branch)'
 
