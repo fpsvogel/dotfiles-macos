@@ -67,6 +67,7 @@ alias gps='git push'
 alias gpsf='git push --force'
 alias gp='git pull'
 alias gpr='gwm; git pull; gw -; git rebase $(main_branch)'
+alias pr='echo "https://github.com/kin/dot-com/compare/$(git_current_branch)" | pbcopy'
 # # Unnecessary after git config --global push.autoSetupRemote true
 # alias gpup='git push --set-upstream origin $(git_current_branch)'
 alias grm='git rebase $(main_branch)'
