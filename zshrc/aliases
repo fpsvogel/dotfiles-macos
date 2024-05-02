@@ -71,8 +71,9 @@ alias pr='echo "https://github.com/kin/dot-com/compare/$(git_current_branch)" | 
 # # Unnecessary after git config --global push.autoSetupRemote true
 # alias gpup='git push --set-upstream origin $(git_current_branch)'
 alias grm='git rebase $(main_branch)'
-# Interactively rebase the last n commits, e.g. gr 5
-gr () {
+alias gri='git rebase -i'
+# Interactively rebase the last n commits, e.g. grn 5
+grn () {
   git rebase -i "HEAD~$1"
 }
 alias grc='git rebase --continue'
