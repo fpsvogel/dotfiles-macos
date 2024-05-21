@@ -143,7 +143,29 @@ alias rkill='lsof -nti :3000 | xargs kill -9; lsof -nti :4000 | xargs kill -9'
 alias b='bundle'
 
 # Exercism
-# Run tests for the latest Ruby exercise.
-alias xt='ruby $(ls -td -- */ | head -n 1)*_test.rb'
-# Submit the latest Ruby exercise.
-alias xs='exercism submit $(find $(ls -td -- */ | head -n 1 | cut -d"/" -f1) -name "*.rb" ! -name "*_test.rb")'
+# Download an exercise.
+xd () {
+  exercism download --track="${PWD##*/}" --exercise=$1
+}
+# Test most recent.
+function xt () {
+  case "${PWD##*/}" in
+  (haskell)
+    cd $(ls -td -- */ | head -n 1); stack test; cd -
+    ;;
+  (ruby)
+    ruby $(ls -td -- */ | head -n 1)*_test.rb
+    ;;
+  esac
+}
+# Submit most recent.
+function xs () {
+  case "${PWD##*/}" in
+  (haskell)
+    exercism submit $(find $(ls -td -- */ | head -n 1 | cut -d"/" -f1) -wholename "**/src/*.hs") $(ls -td -- */ | head -n 1)package.yaml
+    ;;
+  (ruby)
+    exercism submit $(find $(ls -td -- */ | head -n 1 | cut -d"/" -f1) -name "*.rb" ! -name "*_test.rb")
+    ;;
+  esac
+}
