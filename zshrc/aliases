@@ -77,6 +77,8 @@ alias gri='git rebase -i'
 grn () {
   git rebase -i "HEAD~$1"
 }
+# Interactively rebase the commits that are just on the current branch.
+alias gr='grn $(git rev-list --count HEAD ^$(main_branch))'
 alias grc='git rebase --continue'
 alias gra='git rebase --abort'
 alias grl='git reflog'
