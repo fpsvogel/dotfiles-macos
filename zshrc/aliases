@@ -64,7 +64,8 @@ alias gls='gl -S'
 # Search for a string in past commits, showing diffs.
 alias glsd='gl -p -S'
 alias gp='git push'
-alias gpf='git push --force'
+alias gpf='git push --force-with-lease'
+alias gpff='git push --force'
 alias gpl='git pull'
 alias pr='echo "https://github.com/kin/dot-com/compare/$(git_current_branch)" | pbcopy'
 # # Unnecessary after git config --global push.autoSetupRemote true
