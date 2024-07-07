@@ -118,6 +118,7 @@ alias rc='rails c'
 alias rcv='rails c --sandbox'
 alias rmg='rails db:migrate RAILS_ENV=development'
 alias rmt='rails db:migrate RAILS_ENV=test'
+alias rmgt='rails db:migrate RAILS_ENV=test'
 rmr () {
   rails db:rollback STEP=$1
 }
