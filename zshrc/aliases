@@ -95,7 +95,22 @@ alias gsl='git stash list'
 alias gss='git stash show'
 alias gssp='git stash show -p'
 alias gs='git status'
-alias gw='git switch'
+gw () {
+  output=$(git branch -a | grep -v remotes | grep -i $1 | head -n 1 | xargs)
+
+  # If a local branch includes the argument, switch to it.
+  if [ -n "$output" ]; then
+    git switch $output
+  # Else, if the argument contains "/" then try to directly `git switch` to it.
+  elif echo "$output" | grep -q '/'; then
+    git switch $1
+  # Otherwise, get a branch name from git that includes the argument, and remove "origin/" from the beginning.
+  else
+    branch=$(git branch -a | grep -i $1 | head -n 1 | xargs)
+    branch=${branch#remotes/origin/}
+    git switch $branch
+  fi
+}
 alias gw-='git switch -'
 alias gwc='git switch --create'
 alias gwm='git switch $(main_branch)'
