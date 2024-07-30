@@ -5,8 +5,8 @@ export PATH=$HOME/.rbenv/shims:$PATH
 export PATH=$HOME/.rbenv/bin:$PATH
 eval "$(rbenv init -)"
 
-# export PATH=$HOME/.luarocks/bin:$PATH
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 # Copy commands here that should take precedence over coreutils (such as /bin/stty)
