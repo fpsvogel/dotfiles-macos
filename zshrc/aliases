@@ -192,3 +192,13 @@ function xs () {
     ;;
   esac
 }
+
+# DragonRuby Game Toolkit
+alias dr='./dragonruby'
+
+# Haskell
+alias cr='cabal run'
+alias cv='cabal repl --with-ghc=doctest'
+# TODO avoid running cabal test first
+alias ct='cabal test > /dev/null; cabal run test:tests'
+alias cc='cabal-prettify --this --expose; sed -i "/other-modules:/ s/ Spec$//" *.cabal'
