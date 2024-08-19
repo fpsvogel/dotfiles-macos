@@ -75,8 +75,18 @@ alias gri='git rebase -i'
 grn () {
   git rebase -i "HEAD~$1"
 }
-# Interactively rebase the commits that are just on the current branch.
-alias gr='grn $(git rev-list --count HEAD ^$(main_branch))'
+# Interactively rebase the commits that are just on the current branch,
+# or (if on main branch) the last 10 (or all, if fewer total) commits.
+gr () {
+  if [[ $(git_current_branch) == $(main_branch) ]]; then
+    total_commits=$(git rev-list --count HEAD)
+    commits_to_use=$(($total_commits < 10 ? $total_commits : 10))
+
+    grn "$commits_to_use"
+  else
+    grn $(git rev-list --count HEAD ^$(main_branch))
+  fi
+}
 alias grc='git rebase --continue'
 alias gra='git rebase --abort'
 alias grl='git reflog'
