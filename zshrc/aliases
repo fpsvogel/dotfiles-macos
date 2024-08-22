@@ -21,9 +21,7 @@ alias g='git'
 alias ga='git add'
 alias gap='git add --patch'
 # Add all except the file given in the argument.
-gax () {
-  git add -- . ":!$1"
-}
+alias gax="git add -- . \":!$1\""
 alias gb='git branch'
 alias gbc='git_current_branch | pbcopy'
 # Catch-all for "master", "main", etc.
@@ -53,7 +51,7 @@ alias gc='git commit --allow-empty-message --message'
 alias gcm='git commit --allow-empty-message --message'
 alias gcma='git commit --amend --no-edit'
 alias gca='git commit --amend --no-edit'
-alias cm='git add .; git commit --allow-empty-message --message'
+alias cm="git add -- . ':!.env'; git commit --allow-empty-message --message"
 alias cma='git add .; git commit --amend --no-edit'
 alias ca='git add .; git commit --amend --no-edit'
 alias gd='git diff'
