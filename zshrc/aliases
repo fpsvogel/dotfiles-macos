@@ -115,6 +115,8 @@ alias gss='git stash show'
 alias gssp='git stash show -p'
 alias gs='git status'
 gw () {
+  git stash --include-untracked
+
   output=$(git branch -a | grep -v remotes | grep -i $1 | head -n 1 | xargs)
 
   # If a local branch includes the argument, switch to it.
@@ -130,9 +132,9 @@ gw () {
     git switch $branch
   fi
 }
-alias gw-='git switch -'
+alias gw-='git stash --include-untracked; git switch -'
 alias gwc='git switch --create'
-alias gwm='git switch $(main_branch)'
+alias gwm='git stash --include-untracked; git switch $(main_branch)'
 
 # POSTGRES
 alias postgres='psql -U postgres'
