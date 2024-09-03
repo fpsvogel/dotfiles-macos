@@ -223,3 +223,7 @@ alias cv='cabal repl --with-ghc=doctest'
 # TODO avoid running cabal test first
 alias ct='cabal test > /dev/null; cabal run test:tests'
 alias cc='cabal-prettify --this --expose; sed -i "/other-modules:/ s/ Spec$//" *.cabal'
+
+# PNPM
+alias ni='pnpm install'
+alias nt='pnpm test'
