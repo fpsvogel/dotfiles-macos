@@ -4,3 +4,6 @@
 #   source ~/scripts/my_zshrc
 
 for f (~/scripts/zshrc*/*) source $f
+
+# Clone https://github.com/fpsvogel/aliases into ~/aliases
+source ~/aliases/aliases
