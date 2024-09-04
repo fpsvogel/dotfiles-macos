@@ -1,1 +1,1 @@
-My MacOS dotfile customizations and other scripts, adapted from [my Linux scripts](https://github.com/fpsvogel/linux-scripts).
+My MacOS dotfiles and other scripts, originally adapted from [my Linux dotfiles](https://github.com/fpsvogel/linux-dotfiles).
